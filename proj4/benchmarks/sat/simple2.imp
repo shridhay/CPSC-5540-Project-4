@@ -1,0 +1,6 @@
+program simple2(x y) is
+  while x >= y do
+    x := x - 1;
+  end
+  assert x != y;
+end

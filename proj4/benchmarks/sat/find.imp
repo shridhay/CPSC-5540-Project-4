@@ -1,0 +1,11 @@
+program find(a[] N x)
+  pre  0 <= N
+is
+  n := 0;
+  while n < N && a[n] != x
+  do
+    n := n + 1;
+  end
+  assert forall i, (0 <= i && i < n) ==> a[i] != x;
+end
+

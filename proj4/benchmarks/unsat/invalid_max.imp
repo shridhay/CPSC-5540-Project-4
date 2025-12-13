@@ -1,0 +1,15 @@
+program invalid_max(a[] N)
+  pre N > 0
+  pre forall i, ((0 <= i && i < N) ==> a[i] >= 0)
+is
+  max := -1;
+  i := 0;
+  while i < N do
+    if max >= a[i] then
+      max := a[i];
+    end
+    i := i + 1;
+  end
+  assert forall i, ((0 <= i && i < N) ==> a[i] <= max);
+  assert exists i, ((0 <= i && i < N) ==> a[i] = max);
+end
