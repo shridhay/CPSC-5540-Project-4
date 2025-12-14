@@ -3,7 +3,7 @@ module Language (ArithExp(..), Assertion(..), Block, BoolExp(..), Comparison(..)
 type Name = String
 
 -- | Arithmetic expressions
-data ArithExp = Num Integer
+data ArithExp = Num Int
               | Var Name
               | Read Name ArithExp
               | Add ArithExp ArithExp
@@ -31,6 +31,7 @@ data BoolExp = BCmp Comparison
              | BParens BoolExp
              deriving (Show)
 
+-- | Assertion expressions
 data Assertion = ACmp Comparison
                | ANot Assertion
                | ADisj Assertion Assertion
@@ -41,6 +42,7 @@ data Assertion = ACmp Comparison
                | AParens Assertion
                deriving (Show)
 
+-- | Statement expressions
 data Statement = Assign Name ArithExp
                | ParAssign Name Name ArithExp ArithExp
                | Write Name ArithExp ArithExp
