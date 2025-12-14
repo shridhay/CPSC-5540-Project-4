@@ -44,9 +44,10 @@ import Parser.Lexer
     "end"       { TEnd }
     "while"     { TWhile }
     "do"        { TDo }
-    "inv"       { TInv }
+--     "inv"       { TInv }
     "pre"       { TPre }
-    "post"      { TPost }
+--     "post"      { TPost }
+    "assert"    { TAssert }  
     "forall"    { TForall }
     "exists"    { TExists }
     "program"   { TProgram }
@@ -66,7 +67,7 @@ import Parser.Lexer
 
 %%
 
-prog :: { Program } : "program" name pres  "is" block "end" { ($2, $3, [], $6) }
+prog :: { Program } : "program" name pres  "is" block "end" { ($2, $3, [], $5) }
 
 arithExp :: { ArithExp }
          : int { Num $1 }
@@ -142,8 +143,8 @@ stmt :: { Statement }
      | name '[' arithExp ']' ":=" arithExp ';' { Write $1 $3 $6 }
      | "if" boolExp "then" block "else" block "end" { If $2 $4 $6 }
      | "if" boolExp "then" block "end" { If $2 $4 [] }
-     | "while" boolExp invs "do" block "end" { While $2 $3 $5 }
-     | "assert" assn
+     | "while" boolExp "do" block "end" { While $2 [] $4 }
+     | "assert" assn ';' { Assert $2 }
 
 block :: { Block }
       : block_rev { reverse $1 }
