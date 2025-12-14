@@ -17,15 +17,15 @@ tokens:-
     "else"                              { const TElse }
     "end"                               { const TEnd }
     "while"                             { const TWhile }
-    "inv"                               { const TInv }
+    -- "inv"                               { const TInv }
     "pre"                               { const TPre }
-    "post"                              { const TPost }
+    -- "post"                              { const TPost }
     "forall"                            { const TForall }
     "exists"                            { const TExists }
     "do"                                { const TDo }
     "program"                           { const TProgram }
     "is"                                { const TIs }
-
+    "assert"                            { const TAssert}
     $digit+                             { TokenInt . read }
     $alpha [$alpha $digit $symb ]*      { TokenName }
     [\[ \] \+ \- \* \/ \% ]             { TokenSymb }
@@ -54,14 +54,15 @@ data Token = TokenInt Int
            | TElse
            | TEnd
            | TWhile
-           | TInv
+        --    | TInv
            | TPre
-           | TPost
+        --    | TPost
            | TForall
            | TExists
            | TDo
            | TProgram
            | TIs
+           | TAssert
            deriving (Eq, Show)
 
 lexProg :: String -> [Token]
