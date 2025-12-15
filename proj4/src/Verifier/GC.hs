@@ -97,6 +97,9 @@ compileCommand (While g invs cmds) = do
                                 (Assume (ACmp (Neq (Num 0) (Num 0)))))))
                     (Assume (boolToAssertion (BNot g)))))))
 
+compileCommand (AssertStmt a) = return (Assert a)
+
+
 havocArith :: ArithExp -> GuardedCommand 
 havocArith (Num _) = assumeTrue
 havocArith (Var varName) = Havoc varName
@@ -142,6 +145,7 @@ havocCommand (If b c1 c2) = Compose (havocBool b) (Compose (havocBlock c1) (havo
 havocCommand (ParAssign x1 x2 e1 e2) = 
     Compose (Havoc x1) (Compose (Havoc x2) (Compose (havocArith e1) (havocArith e2)))
 havocCommand (While g invs cmds) = Compose (havocBool g) (Compose (havocAssertionBlock invs) (havocBlock cmds))
+havocCommand (AssertStmt a) = havocAssert a
 
 havocComp :: Comparison -> GuardedCommand
 havocComp (Eq a1 a2) = Compose (havocArith a1) (havocArith a2)
@@ -175,7 +179,7 @@ combineAssertions [a1] = Assert a1
 combineAssertions (a:as) = Compose (Assert a) (combineAssertions as) 
 
 compileGCM :: Program -> State Int GuardedCommand
-compileGCM (_, pre, post, body) = do
+compileGCM (_, _, pre, post, body) = do
     compiledBody <- (compileBlock body)
     return (Compose (combineAssumes pre) (Compose compiledBody (combineAssertions post)))
 
@@ -274,7 +278,7 @@ arithToZ3 (Read a i) = "(select " ++ a ++ " " ++ arithToZ3 i ++ ")"
 arithToZ3 (Add a1 a2) = "(+ " ++ arithToZ3 a1 ++ " " ++ arithToZ3 a2 ++ ")"
 arithToZ3 (Sub a1 a2) = "(- " ++ arithToZ3 a1 ++ " " ++ arithToZ3 a2 ++ ")"
 arithToZ3 (Mul a1 a2) = "(* " ++ arithToZ3 a1 ++ " " ++ arithToZ3 a2 ++ ")"
-arithToZ3 (Div a1 a2) = "(/ " ++ arithToZ3 a1 ++ " " ++ arithToZ3 a2 ++ ")"
+arithToZ3 (Div a1 a2) = "(div " ++ arithToZ3 a1 ++ " " ++ arithToZ3 a2 ++ ")"
 arithToZ3 (Mod a1 a2) = "(mod " ++ arithToZ3 a1 ++ " " ++ arithToZ3 a2 ++ ")"
 arithToZ3 (Parens a) = arithToZ3 a
 
