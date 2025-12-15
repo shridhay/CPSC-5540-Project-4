@@ -15,6 +15,7 @@ import Parser.Lexer
     name        { TokenName $$ }
     '['         { TokenSymb "[" }
     ']'         { TokenSymb "]" }
+    "[]"        { TokenSymb "[]"}
     '+'         { TokenSymb "+" }
     '-'         { TokenSymb "-" }
     '*'         { TokenSymb "*" }
@@ -22,7 +23,6 @@ import Parser.Lexer
     '%'         { TokenSymb "%" }
     '('         { TokenSymb "(" }
     ')'         { TokenSymb ")" }
-    
     '='         { TokenSymb "=" }
     "!="        { TokenSymb "!=" }
     "<="        { TokenSymb "<=" }
@@ -31,10 +31,8 @@ import Parser.Lexer
     '>'         { TokenSymb ">" }
     '!'         { TokenSymb "!" }
     "==>"       { TokenSymb "==>" }
-    
     "||"        { TokenSymb "||" }
     "&&"        { TokenSymb "&&" }
-
     ":="        { TokenSymb ":=" }
     ','         { TokenSymb "," }
     ';'         { TokenSymb ";" }
@@ -66,6 +64,8 @@ import Parser.Lexer
 %left '!'
 
 %%
+-- Var := x | x "[]"
+-- var :: {Variable} : name {Var $1} | name "[]" {Var $1}
 
 prog :: { Program } : "program" name pres  "is" block "end" { ($2, $3, [], $5) }
 
@@ -144,7 +144,7 @@ stmt :: { Statement }
      | "if" boolExp "then" block "else" block "end" { If $2 $4 $6 }
      | "if" boolExp "then" block "end" { If $2 $4 [] }
      | "while" boolExp "do" block "end" { While $2 [] $4 }
-     | "assert" assn ';' { Assert $2 }
+     | "assert" assn ';' { AssertStmt $2 }
 
 block :: { Block }
       : block_rev { reverse $1 }
