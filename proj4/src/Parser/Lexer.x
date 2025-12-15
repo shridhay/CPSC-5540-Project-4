@@ -11,7 +11,6 @@ $symb = [\_]
 
 tokens:-
     $white+                             ;
-
     "if"                                { const TIf }
     "then"                              { const TThen }
     "else"                              { const TElse }
