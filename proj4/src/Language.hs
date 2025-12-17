@@ -1,8 +1,7 @@
-module Language (ArithExp(..), Assertion(..), Block, BoolExp(..), Comparison(..), Program, Statement(..), Name) where
+module Language (ArithExp(..), Assertion(..), Block, BoolExp(..), Comparison(..), Program, Statement(..), Name, Params(..)) where
 
 type Name = String
 
--- | Arithmetic expressions
 data ArithExp = Num Int
               | Var Name
               | Read Name ArithExp
@@ -12,9 +11,8 @@ data ArithExp = Num Int
               | Div ArithExp ArithExp
               | Mod ArithExp ArithExp
               | Parens ArithExp
-              deriving (Show)
+              deriving (Eq, Ord, Show)
 
--- | Comparisons of arithmetic expressions
 data Comparison = Eq ArithExp ArithExp
                 | Neq ArithExp ArithExp
                 | Le ArithExp ArithExp
@@ -23,7 +21,6 @@ data Comparison = Eq ArithExp ArithExp
                 | Gt ArithExp ArithExp
                 deriving (Show)
 
--- | Boolean expressions 
 data BoolExp = BCmp Comparison
              | BNot BoolExp
              | BDisj BoolExp BoolExp
@@ -31,7 +28,6 @@ data BoolExp = BCmp Comparison
              | BParens BoolExp
              deriving (Show)
 
--- | Assertion expressions
 data Assertion = ACmp Comparison
                | ANot Assertion
                | ADisj Assertion Assertion
@@ -42,15 +38,18 @@ data Assertion = ACmp Comparison
                | AParens Assertion
                deriving (Show)
 
--- | Statement expressions
 data Statement = Assign Name ArithExp
                | ParAssign Name Name ArithExp ArithExp
                | Write Name ArithExp ArithExp
                | If BoolExp Block Block
                | While BoolExp [Assertion] Block
-               | Assert Assertion
+               | AssertStmt Assertion
                deriving (Show)
+
+data Params = IntParam Name
+           | ArrParam Name
+           deriving (Eq, Ord, Show)
 
 type Block = [Statement]
 
-type Program = (Name, [Assertion], [Assertion], Block)
+type Program = (Name, [Params], [Assertion], [Assertion], Block)
