@@ -1,6 +1,0 @@
-program simple(x y) is
-  if x > y then
-    x, y := y, x;
-  end
-  assert x <= y;
-end

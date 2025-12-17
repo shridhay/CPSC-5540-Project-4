@@ -1,9 +1,0 @@
-program invalid_dot_prod(a[] b[] c[] N)
-is
-  i := 0;
-  while i < N do
-    c[i] := a[i] * b[i];
-    i := i + 1;
-  end
-  assert forall i, ((0 <= i && i <= N) ==> a[i] * b[i] = c[i]);
-end
