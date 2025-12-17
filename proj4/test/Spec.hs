@@ -1,4 +1,6 @@
 import Verifier.Verify
+import Verifier.SEE
+import Verifier.GC
 
 import Data.List (findIndices)
 import Data.Maybe (fromMaybe)
@@ -13,8 +15,10 @@ import System.Timeout (timeout)
 main :: IO ()
 main = do
   let benchmarksPath = "./benchmarks/"
-  let sets = [ ("provided invalid", NotVerified, benchmarksPath ++ "invalid/")
-             , ("provided valid", Verified, benchmarksPath ++ "valid/")
+  let sets = [ ("provided invalid", NotVerified, benchmarksPath ++ "unsat/")
+             , ("provided valid", Verified, benchmarksPath ++ "sat/")
+             , ("user-generated invalid", NotVerified, benchmarksPath ++ "user_generated_unsat/")
+             , ("user-generated valid", NotVerified, benchmarksPath ++ "user_generated_sat/")
              ]
   results <- mapM (uncurry3 testSet) sets
   if or results
