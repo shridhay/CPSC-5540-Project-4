@@ -16,9 +16,7 @@ tokens:-
     "else"                              { const TElse }
     "end"                               { const TEnd }
     "while"                             { const TWhile }
-    -- "inv"                               { const TInv }
     "pre"                               { const TPre }
-    -- "post"                              { const TPost }
     "forall"                            { const TForall }
     "exists"                            { const TExists }
     "do"                                { const TDo }
@@ -29,21 +27,18 @@ tokens:-
     $alpha [$alpha $digit $symb ]*      { TokenName }
     [\[ \] \+ \- \* \/ \% ]             { TokenSymb }
     [\( \) ]                            { TokenSymb }
-    
     [\= \< \>]                          { TokenSymb }
     \!\=                                { TokenSymb }
     \>\=                                { TokenSymb }
     \<\=                                { TokenSymb }
     \!                                  { TokenSymb }
     \=\=\>                              { TokenSymb }
-    
     \|\|                                { TokenSymb }
     \&\&                                { TokenSymb }
-
     \:\=                                { TokenSymb }
     \,                                  { TokenSymb }
     \;                                  { TokenSymb }
-
+    
 {
 data Token = TokenInt Int
            | TokenName String
@@ -53,9 +48,7 @@ data Token = TokenInt Int
            | TElse
            | TEnd
            | TWhile
-        --    | TInv
            | TPre
-        --    | TPost
            | TForall
            | TExists
            | TDo
