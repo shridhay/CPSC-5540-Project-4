@@ -42,15 +42,12 @@ import Parser.Lexer
     "end"       { TEnd }
     "while"     { TWhile }
     "do"        { TDo }
---     "inv"       { TInv }
     "pre"       { TPre }
---     "post"      { TPost }
     "assert"    { TAssert }  
     "forall"    { TForall }
     "exists"    { TExists }
     "program"   { TProgram }
     "is"        { TIs }
-
 
 %left '+' '-'
 %left '*' '/' '%'
@@ -64,10 +61,8 @@ import Parser.Lexer
 %left '!'
 
 %%
--- Var := x | x "[]"
--- var :: {Variable} : name {Var $1} | name "[]" {Var $1}
 
-prog :: { Program } : "program" name pres  "is" block "end" { ($2, $3, [], $5) }
+prog :: { Program } : "program" name args pres "is" block "end" { ($2, $3, $4, [], $6) }
 
 arithExp :: { ArithExp }
          : int { Num $1 }
@@ -112,30 +107,26 @@ assn :: { Assertion }
 
 pre :: { Assertion }
     : "pre" assn { $2 }
+    
 pres_rev :: { [Assertion] }
          : { [] }
          | pre { [$1] }
          | pres_rev pre { $2 : $1 }
+         
 pres :: { [Assertion] }
      : pres_rev { reverse $1 }
 
--- post :: { Assertion }
---      : "post" assn { $2 }
--- posts_rev :: { [Assertion] }
---           : { [] }
---           | post { [$1] }
---           | posts_rev post { $2 : $1 }
--- posts :: { [Assertion] }
---       : posts_rev { reverse $1 }
+args :: { [Params] }
+     : '(' ')' { [] }
+     | '(' argList ')' { reverse $2 }
 
--- inv :: { Assertion }
---     : "inv" assn { $2 }
--- invs_rev :: { [Assertion] }
---      : { [] }
---      | inv { [$1] }
---      | invs_rev inv { $2 : $1 }
--- invs :: { [Assertion] }
---      : invs_rev { reverse $1 }
+argList :: { [Params] }
+        : params { [$1] }
+        | argList params { $2 : $1 }
+
+params :: { Params }
+      : name { IntParam $1 }
+      | name '[' ']' { ArrParam $1 }
 
 stmt :: { Statement }
      : name ":=" arithExp ';' { Assign $1 $3 }
@@ -151,7 +142,7 @@ block :: { Block }
 
 block_rev :: { Block }
           : { [] }
-	  | stmt { [$1] }
+	     | stmt { [$1] }
           | block_rev stmt {$2:$1}
 
 {
