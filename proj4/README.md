@@ -43,3 +43,32 @@ This directory provides a basic test suite that collects programs from the `benc
 
 This repository provides a GitHub workflow that is triggered on every push to the `main` branch on the GitHub remote. The workflow checks out the latest commit on the `main` branch and run `stack test`. It also provides access to Z3, a SMT solver, on your `PATH` with the name `z3`. Feel free to set up a different SMT solver if that is what you choose to use.
 
+# Directory Tree Map
+
+proj4/
+├── app/
+│   ├── Main.hs
+└── benchmarks/
+│    ├── sat/
+│    └── unsat/
+│    └── user_generated_sat/
+│    └── user_generated_unsat/
+├── src/
+│   ├── Verifier/
+│   │   ├── GC.hs
+│   │   └── SEE.hs
+│   │   └── Verify.hs
+│   └── Parser/
+│       └── Lexer.x
+│       └── Parser.y
+│── Language.hs
+└── test/
+│    ├── Spec.hs
+├── package.yaml
+├── README.md
+├── Setup.hs
+├── stack.yaml
+├── stack.yaml.lock
+├── vcgen.cabal
+
+
