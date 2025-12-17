@@ -1,0 +1,14 @@
+program listCompare (n m a[] b[])
+is
+  i := 0;
+  j := 0;
+  while i < n
+  do
+    while j < m
+    do
+      assert a[i] != b[j] + 2;
+      j := j + 1;
+    end
+    i := i + 1;
+  end
+end

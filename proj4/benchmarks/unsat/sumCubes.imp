@@ -1,0 +1,11 @@
+program sumCubes(N)
+  pre  0 <= N
+is
+  n := 0;
+  sum := 0;
+  while n <= N do
+    n := n + 1;
+    sum := sum + n*n*n;
+  end
+  assert sum = (N*N * (N+1)*(N+1))/4;
+end
