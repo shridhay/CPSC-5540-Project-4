@@ -1,4 +1,4 @@
-This Implementation was developed by Jonathan Chen and Hridhay Suresh.
+This Implementation was developed by Hridhay Suresh.
 
 To run this implementation you must have haskell, the Z3 library, and Containers installed.
 
