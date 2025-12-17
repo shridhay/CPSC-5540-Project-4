@@ -10,7 +10,7 @@ Once the above task is completed, you will then need to run the "stack build" co
 
 Following the stack build command, you will need to then run the command "stack run /path/to/program.imp" with "/path/to/program.imp" being the file path to the .imp benchmark file that you would like to run.
 
-We have provided six benchmark tests.  All of our tests are valid.  All of the benchmark tests are in the project_1/proj1/benchmarks/user_generated/valid folder.
+We have provided six benchmark tests.  All of our tests are valid.  All of the benchmark tests are in the proj4/benchmarks/user_generated_sat/and proj4/benchmarks/user_generated_unsat/ folders.
 
 # Getting Started
 
