@@ -8,8 +8,9 @@ main :: IO ()
 main = do
     as <- getArgs
     case as of 
-      [prog, nstr] -> do
+      [filename, nstr] -> do 
         let n = read nstr :: Int
+        prog <- (readFile filename)
         result <- (verify prog n)
         output result        
       _ ->
