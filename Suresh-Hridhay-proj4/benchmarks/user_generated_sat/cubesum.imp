@@ -1,0 +1,11 @@
+program cubesum(N)
+  pre N >= 0 
+is
+  p := 0;
+  x := 0;
+  while x < N do
+    x := x + 1;
+    p := p + (x * x * x);
+  end
+  assert p = ((((N * N) + N) * ((N * N) + N)) / 4);
+end

@@ -1,0 +1,8 @@
+program add(N M)
+  pre N >= 0 && M >= 0 
+is
+  p := 0;
+  x := N;
+  p := x + M;
+  assert p = N + M;
+end

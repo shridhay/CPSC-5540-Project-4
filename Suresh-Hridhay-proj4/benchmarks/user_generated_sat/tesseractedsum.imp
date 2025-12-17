@@ -1,0 +1,11 @@
+program tesseractedsum(N)
+  pre N >= 0 
+is
+  p := 0;
+  x := 0;
+  while x < N do
+    x := x + 1;
+    p := p + (x * x * x * x);
+  end
+  assert p = ((((N * N) + N) * ((2 * N) + 1) * ((3 * N * N) + (3 * N) - 1)) / 30);
+end
