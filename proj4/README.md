@@ -44,7 +44,7 @@ This directory provides a basic test suite that collects programs from the `benc
 This repository provides a GitHub workflow that is triggered on every push to the `main` branch on the GitHub remote. The workflow checks out the latest commit on the `main` branch and run `stack test`. It also provides access to Z3, a SMT solver, on your `PATH` with the name `z3`. Feel free to set up a different SMT solver if that is what you choose to use.
 
 # Directory Tree Map
-{content:
+```
 proj4/
 ├── app/
 │   ├── Main.hs
@@ -70,5 +70,5 @@ proj4/
 ├── stack.yaml
 ├── stack.yaml.lock
 ├── vcgen.cabal
-}
+```
 
